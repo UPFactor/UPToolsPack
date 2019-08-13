@@ -3,11 +3,11 @@
 namespace UPTools;
 
 /**
- * Class Collection
+ * Class CollectionMap
  *
  * @package UPTools
  */
-class Collection {
+class CollectionMap {
 
     use CollectionBaseTrait,
         CollectionMapTrait;
