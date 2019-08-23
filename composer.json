@@ -11,7 +11,12 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+      "ext-json": "*",
+        "ext-fileinfo": "*",
+        "ext-posix": "*",
+        "ext-mbstring": "*"
+    },
     "autoload": {
         "psr-4": {
             "UPTools\\": "library"

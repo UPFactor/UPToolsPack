@@ -168,6 +168,70 @@ class Dir extends FileInfo
     }
 
     /**
+     * Returns files and subdirectories from the current directory
+     *
+     * @param string $pattern
+     * @return FileInfo[]
+     */
+    public function scan($pattern = '/*'){
+        $list =  glob($this->realPath . $pattern);
+
+        if (!is_array($list)){
+            return [];
+        }
+
+        foreach ($list as $k => $path){
+            $list[$k] = FileInfo::bind($path);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Returns a list of files in the current directory
+     *
+     * @param string $pattern
+     * @return File[]
+     */
+    public function getFiles($pattern = '/*.*'){
+        $files = [];
+        $list =  glob($this->realPath . $pattern);
+
+        if (!is_array($list)){
+            return $files;
+        }
+
+        foreach ($list as $path){
+            if (is_file($path)){
+                $files[] = File::bind($path);
+            }
+        }
+
+        return $files;
+    }
+
+
+    /**
+     * Returns a list of subdirectories
+     *
+     * @param string $pattern
+     * @return Dir[]
+     */
+    public function getSubDirectories($pattern = '/*'){
+        $list =  glob($this->realPath . $pattern , GLOB_ONLYDIR);
+
+        if (!is_array($list)){
+            return [];
+        }
+
+        foreach ($list as $k => $path){
+            $list[$k] = static::bind($path);
+        }
+
+        return $list;
+    }
+
+    /**
      * Gets the total size of all files in the directory.
      *
      * @return int
