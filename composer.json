@@ -12,7 +12,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-      "ext-json": "*",
+        "ext-json": "*",
         "ext-fileinfo": "*",
         "ext-posix": "*",
         "ext-mbstring": "*"
