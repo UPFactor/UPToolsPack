@@ -257,7 +257,10 @@ class Validator
                 return;
             }
 
-            $midArray = $this->arrayRule->value;
+            if (is_null($midArray = $this->arrayRule->value)){
+                return;
+            }
+
             $this->arrayRule->reset();
 
             foreach (array_keys($midArray) as $midKey){
