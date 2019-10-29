@@ -2,7 +2,7 @@
 
 namespace UPTools;
 
-use Exception;
+use UPTools\Exceptions\FileException;
 
 /**
  * Class File
@@ -153,7 +153,7 @@ class File extends FileInfo
             return $this;
         }
 
-        throw new Exception("Failed open file [{$this->path}]");
+        throw new FileException("Failed open file [{$this->path}]");
     }
 
     /**
@@ -181,7 +181,7 @@ class File extends FileInfo
         }
 
         if (($cursor = ftell($this->resource)) === false){
-            throw new Exception("Failed get cursor position for file [{$this->path}]");
+            throw new FileException("Failed get cursor position for file [{$this->path}]");
         }
 
         return $cursor;
@@ -199,7 +199,7 @@ class File extends FileInfo
         }
 
         if ((fseek($this->resource, $offset, SEEK_CUR)) !== 0){
-            throw new Exception("Failed change cursor position for file [{$this->path}]");
+            throw new FileException("Failed change cursor position for file [{$this->path}]");
         }
 
         return $this;
@@ -216,7 +216,7 @@ class File extends FileInfo
         }
 
         if ((rewind($this->resource)) === false){
-            throw new Exception("Failed change cursor position for file [{$this->path}]");
+            throw new FileException("Failed change cursor position for file [{$this->path}]");
         }
 
         return $this;
@@ -233,7 +233,7 @@ class File extends FileInfo
         }
 
         if ((fseek($this->resource, 0, SEEK_END)) !== 0){
-            throw new Exception("Failed change cursor position for file [{$this->path}]");
+            throw new FileException("Failed change cursor position for file [{$this->path}]");
         }
 
         return $this;
@@ -318,7 +318,7 @@ class File extends FileInfo
     public function content(){
         $content = file_get_contents($this->path());
         if ($content === false){
-            throw new Exception("Failed reading file [{$this->path}]");
+            throw new FileException("Failed reading file [{$this->path}]");
         }
 
         $this->valid = true;
@@ -335,7 +335,7 @@ class File extends FileInfo
      */
     public function put($content){
         if (@file_put_contents($this->path, $content) === false){
-            throw new Exception("Failed reading file [{$this->path}]");
+            throw new FileException("Failed reading file [{$this->path}]");
         }
 
         $this->valid = true;
@@ -363,7 +363,7 @@ class File extends FileInfo
      */
     public function append($content){
         if (@file_put_contents($this->path, $content, FILE_APPEND) === false){
-            throw new Exception("Failed reading file [{$this->path}]");
+            throw new FileException("Failed reading file [{$this->path}]");
         }
 
         $this->valid = true;
@@ -391,7 +391,7 @@ class File extends FileInfo
             return $this;
         }
 
-        throw new Exception("Failed to rename the file [{$oldPath}] to [{$newPath}].");
+        throw new FileException("Failed to rename the file [{$oldPath}] to [{$newPath}].");
     }
 
     /**
@@ -415,7 +415,7 @@ class File extends FileInfo
             return new static($path);
         }
 
-        throw new Exception("Failed to copy the file [{$this->path}] to [{$path}]");
+        throw new FileException("Failed to copy the file [{$this->path}] to [{$path}]");
     }
 
     /**
@@ -458,6 +458,6 @@ class File extends FileInfo
             return true;
         }
 
-        throw new Exception("Invalid file name. Expected [string], passed [" . gettype($path) . "].");
+        throw new FileException("Invalid file name. Expected [string], passed [" . gettype($path) . "].");
     }
 }

@@ -2,7 +2,7 @@
 
 namespace UPTools;
 
-use Exception;
+use UPTools\Exceptions\FileInfoException;
 
 /**
  * Class FileInfo
@@ -78,7 +78,7 @@ class FileInfo
             return $this->{$name}();
         }
 
-        throw new Exception("Property [{$name}] does not exist on [".static::class."] instance.");
+        throw new FileInfoException("Property [{$name}] does not exist on [".static::class."] instance.");
     }
 
     /**
@@ -97,7 +97,7 @@ class FileInfo
      */
     public function path(){
         if (!$this->valid){
-            throw new Exception("The path [{$this->path}] does not exist");
+            throw new FileInfoException("The path [{$this->path}] does not exist");
         }
 
         return $this->path;
@@ -110,7 +110,7 @@ class FileInfo
      */
     public function realPath(){
         if (!$this->valid){
-            throw new Exception("The path [{$this->path}] does not exist");
+            throw new FileInfoException("The path [{$this->path}] does not exist");
         }
 
         return realpath($this->path);
@@ -224,7 +224,7 @@ class FileInfo
             return posix_getpwuid($owner);
         }
 
-        throw new Exception("Failed to get the owner for the path [{$this->path}].");
+        throw new FileInfoException("Failed to get the owner for the path [{$this->path}].");
     }
 
     /**
@@ -237,7 +237,7 @@ class FileInfo
             return posix_getgrgid($group);
         }
 
-        throw new Exception("Failed to get the group for the path [{$this->path}].");
+        throw new FileInfoException("Failed to get the group for the path [{$this->path}].");
     }
 
     /**

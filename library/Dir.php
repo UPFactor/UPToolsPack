@@ -2,7 +2,7 @@
 
 namespace UPTools;
 
-use Exception;
+use UPTools\Exceptions\DirException;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use FilesystemIterator;
@@ -24,7 +24,7 @@ class Dir extends FileInfo
      */
     public static function documentRoot(){
         if (!($path = realpath($_SERVER['DOCUMENT_ROOT']))){
-            throw new Exception('Directory from variable $_SERVER[\'DOCUMENT_ROOT\'] not found');
+            throw new DirException('Directory from variable $_SERVER[\'DOCUMENT_ROOT\'] not found');
         }
         return new static($path);
     }
@@ -285,7 +285,7 @@ class Dir extends FileInfo
             return $this;
         }
 
-        throw new Exception("Failed to rename the directory [{$oldPath}] to [{$newPath}].");
+        throw new DirException("Failed to rename the directory [{$oldPath}] to [{$newPath}].");
     }
 
     /**
@@ -308,7 +308,7 @@ class Dir extends FileInfo
             return $this;
         }
 
-        throw new Exception("Failed to change directory to [{$path}].");
+        throw new DirException("Failed to change directory to [{$path}].");
     }
 
     /**
@@ -318,7 +318,7 @@ class Dir extends FileInfo
      */
     public function create(){
         if (mkdir($this->path,0777,true) === false) {
-            throw new Exception("Failed creating directory [{$this->path}]");
+            throw new DirException("Failed creating directory [{$this->path}]");
         }
 
         $this->valid = true;
@@ -429,7 +429,7 @@ class Dir extends FileInfo
             return true;
         }
 
-        throw new Exception("Invalid directory name. Expected [string], passed [" . gettype($path) . "].");
+        throw new DirException("Invalid directory name. Expected [string], passed [" . gettype($path) . "].");
     }
 
     /**
@@ -443,7 +443,7 @@ class Dir extends FileInfo
         $path = $this->realPath();
 
         if ($path === false){
-            throw new Exception("The path [{$this->path}] does not exist");
+            throw new DirException("The path [{$this->path}] does not exist");
         }
 
         $sort = $childFirst === true ?
