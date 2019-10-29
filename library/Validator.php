@@ -274,11 +274,16 @@ class Validator
 
         $attribute = $attribute[0];
 
-        Arr::each($rules, function(Rule $rule) use ($attribute){
+        /**
+         * @var Rule[] $rules
+         * @var Rule $rule
+         */
+        foreach ($rules as $rule){
             if ($rule->passes($attribute)->fails){
                 $this->fails = true;
                 $this->failed[$attribute] = $rule->message;
+                break;
             }
-        });
+        }
     }
 }
