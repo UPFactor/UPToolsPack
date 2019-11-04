@@ -47,7 +47,7 @@ use UPTools\Exceptions\ValidatorException;
  * @property-read array $midKeys
  * @property-read array $rules
  * @property-read array $failed
- * @property-read array $fails
+ * @property-read boolean $fails
  *
  * @package UPTools
  */
