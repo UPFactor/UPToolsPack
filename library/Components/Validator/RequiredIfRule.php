@@ -22,7 +22,7 @@ class RequiredIfRule extends Rule
                 return false;
             }
 
-            return $equal == $this->getMidValue($field);
+            return !($equal == $this->getMidValue($field));
         }
         return true;
     }
