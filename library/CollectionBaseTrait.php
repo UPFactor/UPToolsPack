@@ -50,6 +50,15 @@ trait CollectionBaseTrait {
     }
 
     /**
+     * Alias of unwrap method
+     *
+     * @return array
+     */
+    public function toArray(){
+        return $this->unwrap();
+    }
+
+    /**
      * Convert the collection to its string representation.
      *
      * @return string
