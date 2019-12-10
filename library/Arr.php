@@ -241,14 +241,14 @@ class Arr {
      */
     static public function not(array $array, $keys){
         $keys = static::wrap($keys);
-        $result = [];
 
         foreach($keys as $key){
-            if (array_key_exists($key, $array)) continue;
-            $result[$key] = $array[$key];
+            if (array_key_exists($key, $array)) {
+                unset($array[$key]);
+            }
         }
 
-        return $result;
+        return $array;
     }
 
     /**
