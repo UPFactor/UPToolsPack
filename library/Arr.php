@@ -232,6 +232,26 @@ class Arr {
     }
 
     /**
+     * Get a new array based on the current one, eliminating
+     * a subset of items.
+     *
+     * @param array $array
+     * @param string|array $keys
+     * @return array
+     */
+    static public function not(array $array, $keys){
+        $keys = static::wrap($keys);
+        $result = [];
+
+        foreach($keys as $key){
+            if (array_key_exists($key, $array)) continue;
+            $result[$key] = $array[$key];
+        }
+
+        return $result;
+    }
+
+    /**
      * Get a new array based on the current one, excluding items
      * with the specified keys using "dot" notation.
      *

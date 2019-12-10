@@ -237,13 +237,24 @@ trait CollectionBaseTrait {
     }
 
     /**
-     * Get a subset of the items from the given array.
+     * Get a subset of the items from the collection.
      *
      * @param string|array $keys
      * @return static
      */
     public function only($keys){
         return $this->redeclare(Arr::only($this->items, $keys));
+    }
+
+    /**
+     * Get a new collection based on the current one, eliminating
+     * a subset of items.
+     *
+     * @param string|array $keys
+     * @return static
+     */
+    public function not($keys){
+        return $this->redeclare(Arr::not($this->items, $keys));
     }
 
     /**
