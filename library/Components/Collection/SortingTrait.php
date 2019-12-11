@@ -1,16 +1,16 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
 
 use Closure;
 
 /**
- * Trait CollectionSortingTrait
+ * Methods for sorting collections.
  *
- * @see CollectionBaseTrait
- * @package UPTools
+ * @see BaseTrait
+ * @package UPTools\Components\Collection
  */
-trait CollectionSortingTrait {
+trait SortingTrait {
 
     /**
      * Reverse items order.

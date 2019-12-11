@@ -1,14 +1,16 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
+
+use UPTools\Arr;
 
 /**
- * Trait CollectionFusionTrait
+ * Methods for combining collections.
  *
- * @see CollectionBaseTrait
- * @package UPTools
+ * @see BaseTrait
+ * @package UPTools\Components\Collection
  */
-trait CollectionFusionTrait {
+trait FusionTrait {
 
     /**
      * Removes duplicate values from a collection.

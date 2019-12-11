@@ -1,14 +1,16 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
+
+use UPTools\Arr;
 
 /**
- * Trait CollectionConversionTrait
+ * Methods for conversion collections.
  *
- * @see CollectionBaseTrait
- * @package UPTools
+ * @see BaseTrait
+ * @package UPTools\Components\Collection
  */
-trait CollectionConversionTrait {
+trait ConversionTrait {
 
     /**
      * Returns the JSON representation of the collection.

@@ -2,15 +2,23 @@
 
 namespace UPTools;
 
+use ArrayAccess;
+use Countable;
+use IteratorAggregate;
+use UPTools\Components\Collection\ArrayAccessTrait;
+use UPTools\Components\Collection\BaseTrait;
+use UPTools\Components\Collection\MapTrait;
+
 /**
  * Class CollectionMap
  *
  * @package UPTools
  */
-class CollectionMap {
+class CollectionMap implements Countable, IteratorAggregate, ArrayAccess {
 
-    use CollectionBaseTrait,
-        CollectionMapTrait;
+    use BaseTrait,
+        MapTrait,
+        ArrayAccessTrait;
 
     /**
      * Create a new collection.

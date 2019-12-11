@@ -1,14 +1,16 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
+
+use UPTools\Arr;
 
 /**
- * Trait CollectionSetTrait
+ * Methods for one-dimensional collections.
  *
- * @see CollectionBaseTrait
- * @package UPTools
+ * @see BaseTrait
+ * @package UPTools\Components\Collection
  */
-trait CollectionSetTrait {
+trait SetTrait {
 
     /**
      * Push an item onto the beginning of the collection.

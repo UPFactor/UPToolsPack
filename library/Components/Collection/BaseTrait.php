@@ -1,15 +1,18 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
 
+use ArrayIterator;
 use Closure;
+use UPTools\Arr;
+use UPTools\Str;
 
 /**
- * Trait CollectionBaseTrait
+ * Base methods of collections.
  *
- * @package UPTools
+ * @package UPTools\Components\Collection
  */
-trait CollectionBaseTrait {
+trait BaseTrait {
 
     /**
      * The items contained in the collection.
@@ -288,7 +291,7 @@ trait CollectionBaseTrait {
      * @return static
      */
     public function map(Closure $callable, $context = null){
-        return static::wrap(Arr::map($this->items, $callable, $context));
+        return $this->redeclare(Arr::map($this->items, $callable, $context));
     }
 
     /**
@@ -324,6 +327,16 @@ trait CollectionBaseTrait {
      */
     public function slice($offset, $length = null){
         return $this->redeclare(array_slice($this->items, $offset, $length, true));
+    }
+
+    /**
+     * Get an iterator for the items.
+     *
+     * @return ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->items);
     }
 
     /**

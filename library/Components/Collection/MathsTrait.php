@@ -1,14 +1,16 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
+
+use UPTools\Arr;
 
 /**
- * Trait CollectionMathsTrait
+ * Mathematical methods of collections.
  *
- * @see CollectionBaseTrait
- * @package UPTools
+ * @see BaseTrait
+ * @package UPTools\Components\Collection
  */
-trait CollectionMathsTrait {
+trait MathsTrait {
 
     /**
      * Find highest value.

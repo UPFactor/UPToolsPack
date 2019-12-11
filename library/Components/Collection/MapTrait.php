@@ -1,14 +1,14 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
 
 /**
- * Trait CollectionMapTrait
+ * Methods for collections of key-value pairs.
  *
- * @see CollectionBaseTrait
- * @package UPTools
+ * @see BaseTrait
+ * @package UPTools\Components\Collection
  */
-trait CollectionMapTrait {
+trait MapTrait {
 
     /**
      * Get item/items from collection by key/keys.
@@ -152,23 +152,5 @@ trait CollectionMapTrait {
         }
 
         return $this;
-    }
-
-    /**
-     * Get a new collection based on the current one, excluding items
-     * with the specified keys.
-     *
-     * @param string|string[]|int|int[] $keys
-     * @return static
-     */
-    public function except($keys){
-        $keys = Arr::wrap($keys);
-        $result = $this->items;
-
-        foreach ($keys as $key){
-            unset($result[$key]);
-        }
-
-        return $this->redeclare($result);
     }
 }

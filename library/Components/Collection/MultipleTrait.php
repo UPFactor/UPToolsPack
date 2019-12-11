@@ -1,16 +1,17 @@
 <?php
 
-namespace UPTools;
+namespace UPTools\Components\Collection;
 
 use Closure;
+use UPTools\Arr;
 
 /**
- * Trait CollectionMultipleTrait
+ * Methods for multi-dimensional collections.
  *
- * @see CollectionBaseTrait
- * @package UPTools
+ * @see BaseTrait
+ * @package UPTools\Components\Collection
  */
-trait CollectionMultipleTrait {
+trait MultipleTrait {
 
     /**
      * Determines whether the collection contains an associative array.
