@@ -55,12 +55,7 @@ trait MapTrait {
         if (is_array($keys)){
             $values = [];
             foreach ($keys as $index => $key){
-                if (key_exists($key, $this->items)){
-                    $values[$index] = $this->items[$key];
-                    unset($this->items[$key]);
-                } else {
-                    $values[$index] = $default;
-                }
+                $keys[$index] = static::pull($key, $default);
             }
             return $values;
         }
