@@ -291,7 +291,7 @@ trait BaseTrait {
      * @return static
      */
     public function map(Closure $callable, $context = null){
-        return $this->redeclare(Arr::map($this->items, $callable, $context));
+        return (new static())->reset(Arr::map($this->items, $callable, $context));
     }
 
     /**
