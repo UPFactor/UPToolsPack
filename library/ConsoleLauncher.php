@@ -44,62 +44,106 @@ class ConsoleLauncher
     }
 
     public function getOptions(){
-        /**@var array $argv**/
         global $argv;
-        if (php_sapi_name() !== 'cli') return array();
-        if (!$argv or !is_array($argv)) return array();
-        $arguments = array_slice($argv, 1);
-        $result = array();
-        foreach ($arguments as $argument){
+        if (php_sapi_name() !== 'cli'){
+            return [];
+        }
+
+        if (!$argv or !is_array($argv)){
+            return [];
+        }
+
+        $result = [];
+        foreach (array_slice($argv, 1) as $argument){
             if(preg_match('/^((?:-{1,2})?\w[\w\-]*)=(.*?)$/is', $argument, $matches)){
                 $result[$matches[1]]=$matches[2];
             } else {
                 $result[$argument] = '';
             }
         }
+
         return $result;
     }
 
     public function message($message, $style = 'default'){
-        if (is_bool($message)) $message = ($message ? 'true' : 'false');
-        if (is_array($message) or is_object($message)) $message = static::arrayToString((array)$message);
+        if (is_bool($message)) {
+            $message = ($message ? 'true' : 'false');
+        }
+
+        if (is_array($message) or is_object($message)) {
+            $message = static::arrayToString((array)$message);
+        }
+
         static::style($style);
-        fwrite(STDERR, $message."\n");
+        fwrite(STDERR, "{$message}\n");
         static::style();
     }
 
     public function error($message){
-        static::message('Error: '.$message, 'red');
+        static::message("Error: {$message}", 'red');
         die();
     }
 
     public function notice($message){
-        static::message('Notice: '.$message, 'blue');
+        static::message("Notice: {$message}", 'blue');
     }
 
     public function warning($message){
-        static::message('Warning: '.$message, 'yellow');
+        static::message("Warning: {$message}", 'yellow');
     }
 
     public function success($message){
         static::message($message, 'green');
     }
 
-    /**
-     * @param $message
-     * @param bool $required
-     * @param callable|null $prepare
-     * @return mixed
-     */
     public function request($message, $required = false, callable $prepare = null){
         do {
             static::style('blue');
             fwrite(STDERR, $message.' ');
             static::style();
+
             $value = trim(fgets(STDIN));
-            if ($prepare) $value = $prepare($value);
+            if ($prepare) {
+                $value = $prepare($value);
+            }
         } while ($required and ($value === '' or $value === null));
+
         return $value;
+    }
+
+    public function process(array $dataset, callable $itemHandler)
+    {
+        $startTime = time();
+        $size = 50;
+        $done = 1;
+        $total = count($dataset);
+        $display = '';
+
+        foreach ($dataset as $itemKey => $itemValue){
+
+            if ($itemHandler($itemValue, $itemKey) === false){
+                break;
+            }
+
+            $done++;
+            $now = time();
+            $elapsedTime = $now - $startTime;
+            $rate = $elapsedTime / $done;
+            $leftTime = round($rate * ($total - $done));
+
+            $perc=(double)($done / $total);
+            $barSize=floor($perc*$size);
+
+            $display.= "[".str_repeat("▒", $barSize);
+            $display.= $barSize < $size ? str_repeat(" ", $size - $barSize) : "▒";
+            $display.= "] " . ($perc * 100) . "%  {$done}/{$total}";
+            $display.= "  remaining: " . $leftTime > 60 ? (round($leftTime / 60, 1) . "min.") : "{$leftTime} sec.";
+            $display.= "  elapsed: " . $elapsedTime > 60 ? (round($elapsedTime / 60, 1) . "min.") : "{$elapsedTime} sec.";
+
+            fwrite(STDERR, "\r{$display}");
+        }
+
+        fwrite(STDERR, "\n");
     }
 
     public function bind($pattern, callable $handler){
