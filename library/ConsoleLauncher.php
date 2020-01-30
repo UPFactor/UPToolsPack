@@ -75,7 +75,7 @@ class ConsoleLauncher
         }
 
         static::style($style);
-        fwrite(STDERR, "{$message}\n");
+        fwrite(STDOUT, "{$message}\n");
         static::style();
     }
 
@@ -99,7 +99,7 @@ class ConsoleLauncher
     public function request($message, $required = false, callable $prepare = null){
         do {
             static::style('blue');
-            fwrite(STDERR, $message.' ');
+            fwrite(STDOUT, $message.' ');
             static::style();
 
             $value = trim(fgets(STDIN));
@@ -140,10 +140,10 @@ class ConsoleLauncher
             $display.= "  remaining: " . $leftTime > 60 ? (round($leftTime / 60, 1) . "min.") : "{$leftTime} sec.";
             $display.= "  elapsed: " . $elapsedTime > 60 ? (round($elapsedTime / 60, 1) . "min.") : "{$elapsedTime} sec.";
 
-            fwrite(STDERR, "\r{$display}");
+            fwrite(STDOUT, "\r{$display}");
         }
 
-        fwrite(STDERR, "\n");
+        fwrite(STDOUT, "\n");
     }
 
     public function bind($pattern, callable $handler){
