@@ -38,6 +38,7 @@ use UPTools\Components\Validator\SerializeRule;
 use UPTools\Components\Validator\SizeRule;
 use UPTools\Components\Validator\StringRule;
 use UPTools\Components\Validator\URLRule;
+use UPTools\Exceptions\ValidationException;
 use UPTools\Exceptions\ValidatorException;
 
 /**
@@ -129,6 +130,23 @@ class Validator
     public static function make(array $data, array $rules)
     {
         return new static($data, $rules);
+    }
+
+    /**
+     * Checks if a value matches a given rule.
+     *
+     * @param mixed $value
+     * @param string|array|callable $rule
+     * @param null $message
+     * @throws ValidationException
+     */
+    public static function assert($value, $rule, $message = null)
+    {
+        if (($validator = new static(['value' => $value], ['value' => $rule]))->fails){
+            throw new ValidationException(
+                is_null($message) ? Arr::first($validator->failed) : sprintf($message, Arr::first($validator->failed))
+            );
+        }
     }
 
     /**
