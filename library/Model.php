@@ -19,6 +19,28 @@ class Model
     protected $properties = [];
 
     /**
+     * Model static constructor.
+     *
+     * @param array $properties
+     * @return static
+     */
+    public static function make(array $properties = [])
+    {
+        return new static($properties);
+    }
+
+    /**
+     * Model constructor.
+     *
+     * @param array $properties
+     */
+    public function __construct(array $properties = [])
+    {
+        $this->init();
+        $this->fill($properties);
+    }
+
+    /**
      * Property reload.
      * Get property value.
      *
