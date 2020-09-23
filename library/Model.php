@@ -21,10 +21,10 @@ class Model
     /**
      * Model static constructor.
      *
-     * @param array $properties
+     * @param array|null $properties
      * @return static
      */
-    public static function make(array $properties = [])
+    public static function make(array $properties = null)
     {
         return new static($properties);
     }
@@ -32,12 +32,12 @@ class Model
     /**
      * Model constructor.
      *
-     * @param array $properties
+     * @param array|null $properties
      */
-    public function __construct(array $properties = [])
+    public function __construct(array $properties = null)
     {
         $this->init();
-        $this->fill($properties);
+        $this->fill($properties ?? []);
     }
 
     /**
@@ -196,6 +196,16 @@ class Model
     public function toJson(): string
     {
         return Arr::toJson($this->properties);
+    }
+
+    /**
+     * Returns hash of the model.
+     *
+     * @return string
+     */
+    public function hash(): string
+    {
+        return sha1(serialize($this));
     }
 
     /**
