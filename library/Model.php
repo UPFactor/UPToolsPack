@@ -24,7 +24,7 @@ class Model
      * @param array|null $properties
      * @return static
      */
-    public static function make(array $properties = null)
+    public static function make($properties = null)
     {
         return new static($properties);
     }
